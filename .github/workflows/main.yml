@@ -1,0 +1,73 @@
+name: Deploying AI model to PROD server
+
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Cloning
+        env:
+          SSH_PRIVATE_KEY: ${{ vars.SSH_PRIVATE_KEY }}
+          LIGHTSAIL_IP: ${{ vars.LIGHTSAIL_IP }}
+
+        run: |
+          echo "Executing the clone step"
+          
+          echo "NEXT you will see creds"
+          echo "Accessing SSH_PRIVATE_KEY: ${{ vars.SSH_PRIVATE_KEY }}"
+          echo "Accessing LIGHTSAIL_IP: ${{ vars.LIGHTSAIL_IP }}"
+          
+          
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          
+          echo "private key is added"
+          
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          
+          echo "Next echo will be from Light Sail"
+          
+          ssh -o StrictHostKeyChecking=no ubuntu@$LIGHTSAIL_IP << 'EOF'
+            echo "In the LightSail ....."
+            
+            mkdir -p expo
+            cd expo
+            
+            if [ -d "priya-ai-model" ]; then
+              echo "No need to clone."
+              cd priya-ai-model
+              pwd
+              echo "What are these references here: ${{ github.ref_name }}"
+              git pull origin ${{ github.ref_name }}
+            else
+              echo "Cloning the repo."
+              git clone git@github.com:ushabbir97/priya-ai-model.git
+              echo "Cloned successfully."
+            fi
+          
+          EOF
+          
+          
+          
+
+          
+          
+          
+          
+          
