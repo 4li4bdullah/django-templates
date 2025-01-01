@@ -49,9 +49,9 @@ jobs:
             mkdir -p expo
             cd expo
             
-            if [ -d "priya-ai-model" ]; then
+            if [ -d "deployment" ]; then
               echo "No need to clone."
-              cd priya-ai-model
+              cd deployment
               pwd
               echo "What are these references here: ${{ github.ref_name }}"
               git pull origin ${{ github.ref_name }}
