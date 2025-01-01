@@ -47,7 +47,10 @@ jobs:
             set -e  # Exit if any command fails
 
             echo "Checking for deployment directory on LightSail..."
-
+            mkdir deployment 
+            echo "Creating deployment directory on LightSail..."
+            cd deployment
+            echo "Created deployment directory on LightSail..."
             if [ -d "deployment" ]; then
               echo "Deployment directory exists. Pulling the latest code..."
               cd deployment
