@@ -57,7 +57,7 @@ jobs:
               git pull origin ${{ github.ref_name }}
             else
               echo "Cloning the repo."
-              git clone git@github.com:ushabbir97/priya-ai-model.git
+              git clone git@github.com:4li4bdullah/django-templates.git
               echo "Cloned successfully."
             fi
           
