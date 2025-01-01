@@ -46,8 +46,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no ubuntu@$LIGHTSAIL_IP << 'EOF'
             echo "In the LightSail ....."
             
-            mkdir -p expo
-            cd expo
             
             if [ -d "deployment" ]; then
               echo "No need to clone."
